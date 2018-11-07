@@ -23,12 +23,10 @@ views:
     cards:
       - type: custom:popup-card
         entity: light.bed_light
+        title: Bedside lamp settings
         card:
           type: entities
-          title: Bedside lamp settings
-          show_header_toggle: false
           entities:
-            - type: section
             - light.bed_light
             - type: custom:time-input-row
               entity: input_datetime.on_time
@@ -42,5 +40,6 @@ views:
           - light.kitchen_lights
 ```
 
-![popup-card](https://user-images.githubusercontent.com/1299821/48073399-f8535400-e1de-11e8-9b07-687337295217.jpg)
+
+![skarmavbild 2018-11-07 kl 19 35 12](https://user-images.githubusercontent.com/1299821/48152470-4b530700-e2c4-11e8-8a4d-d6a2121fc4c5.png)
 
