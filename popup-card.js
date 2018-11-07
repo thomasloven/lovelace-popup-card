@@ -13,17 +13,39 @@ class PopupCard extends HTMLElement {
 
   setConfig(config) {
     this.config = config;
+    this.config.title = this.config.title || this.config.entity;
     document.querySelector("home-assistant").addEventListener("hass-more-info", (e) => this._handleMoreInfo(e));
 
     this.card = this.makeCard(config.card);
+    this.header = document.createElement('div');
+    this.header.innerHTML = `
+    <style>
+      app-toolbar {
+        color: var(--more-info-header-color);
+        background-color: var(--more-info-header-background);
+      }
+    </style>
+    <app-toolbar>
+      <paper-icon-button
+        icon="hass:close"
+        dialog-dismiss=""
+      ></paper-icon-button>
+      <div class="main-title" main-title="">
+        ${this.config.title}
+      </div>
+    </app-toolbar>
+    `;
   }
 
   _handleMoreInfo(e) {
-    if(this.card.parentNode)
+    if(this.card.parentNode) {
+      this.header.parentNode.removeChild(this.header);
       this.card.parentNode.removeChild(this.card);
+    }
     if(e.detail && e.detail.entityId && e.detail.entityId == this.config.entity && this.offsetWidth) {
       let moreInfo = document.querySelector("home-assistant").__moreInfoEl;
       moreInfo._page = "none";
+      moreInfo.shadowRoot.appendChild(this.header);
       moreInfo.shadowRoot.appendChild(this.card);
     }
   }

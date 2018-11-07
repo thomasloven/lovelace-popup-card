@@ -11,6 +11,7 @@ Replace the more-info dialog of one entity with a custom lovelace card
 | type | string | **Required** | `custom:popup-card`
 | entity | string | **Required** | Entity id to follow
 | card | object | **Required** | The card to display
+| title | string | entity id | The title to display on dialog
 
 ## Example
 ```yaml
