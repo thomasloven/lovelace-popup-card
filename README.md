@@ -16,7 +16,7 @@ Replace the more-info dialog of one entity with a custom lovelace card
 ## Example
 ```yaml
 resources:
-  - url /local/popup-card.js
+  - url: /local/popup-card.js
     type: js
 views:
   - title: ...
