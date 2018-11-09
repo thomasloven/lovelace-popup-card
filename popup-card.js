@@ -16,6 +16,11 @@ class PopupCard extends HTMLElement {
     this.config.title = this.config.title || this.config.entity;
     document.querySelector("home-assistant").addEventListener("hass-more-info", (e) => this._handleMoreInfo(e));
 
+    if (! Array.isArray(this.config.entity))
+    {
+      this.config.entity = [this.config.entity];
+    }
+
     this.card = this.makeCard(config.card);
     this.header = document.createElement('div');
     this.header.innerHTML = `
@@ -42,7 +47,7 @@ class PopupCard extends HTMLElement {
       this.header.parentNode.removeChild(this.header);
       this.card.parentNode.removeChild(this.card);
     }
-    if(e.detail && e.detail.entityId && e.detail.entityId == this.config.entity && this.offsetWidth) {
+    if(e.detail && e.detail.entityId && this.offsetWidth && this.config.entity.includes(e.detail.entityId)) {
       let moreInfo = document.querySelector("home-assistant").__moreInfoEl;
       moreInfo._page = "none";
       moreInfo.shadowRoot.appendChild(this.header);
