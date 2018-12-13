@@ -12,6 +12,7 @@ class PopupCard extends HTMLElement {
   }
 
   setConfig(config) {
+    this.style.margin = "0";
     this.config = config;
     this.config.title = this.config.title || this.config.entity;
     document.querySelector("home-assistant").addEventListener("hass-more-info", (e) => this._handleMoreInfo(e));
