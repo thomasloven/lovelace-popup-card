@@ -3,7 +3,8 @@ class PopupCard extends HTMLElement {
 
   buildCard() {
     this.card = cardTools.createCard(this.config.card);
-    this.card.hass = this._hass;
+    if(this._hass)
+      this.card.hass = this._hass;
     this.card.addEventListener("ll-rebuild", () => this.buildCard());
   }
 
