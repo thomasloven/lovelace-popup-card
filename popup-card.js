@@ -1,14 +1,10 @@
+customElements.whenDefined('card-tools').then(() => {
 class PopupCard extends HTMLElement {
 
-  makeCard(config) {
-    let tag = config.type;
-    if(tag.startsWith("custom:"))
-      tag = tag.substr(7);
-    else
-      tag = `hui-${tag}-card`;
-    let card = document.createElement(tag);
-    card.setConfig(config);
-    return card;
+  buildCard() {
+    this.card = cardTools.createCard(this.config.card);
+    this.card.hass = this._hass;
+    this.card.addEventListener("ll-rebuild", () => this.buildCard());
   }
 
   setConfig(config) {
@@ -22,7 +18,7 @@ class PopupCard extends HTMLElement {
       this.config.entity = [this.config.entity];
     }
 
-    this.card = this.makeCard(config.card);
+    this.buildCard();
     this.header = document.createElement('div');
     this.header.innerHTML = `
     <style>
@@ -58,6 +54,7 @@ class PopupCard extends HTMLElement {
   }
 
   set hass(hass) {
+    this._hass = hass;
     if(this.card)
       this.card.hass = hass;
   }
@@ -69,3 +66,11 @@ class PopupCard extends HTMLElement {
 }
 
 customElements.define("popup-card", PopupCard);
+});
+
+window.setTimeout(() => {
+  if(customElements.get('card-tools')) return;
+  customElements.define('popup-card', class extends HTMLElement{
+    setConfig() { throw new Error("Can't find card-tools. See https://github.com/thomasloven/lovelace-card-tools");}
+  });
+}, 2000);
