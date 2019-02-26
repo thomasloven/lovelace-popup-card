@@ -3,50 +3,125 @@ popup-card
 
 Replace the more-info dialog of one entity with a custom lovelace card
 
+# Breaking changes!
+popup-card is *no longer a card*. See usage instructions below.
+
+# Instalation instructions
+
 This card requires [card-tools](https://github.com/thomasloven/lovelace-card-tools) to be installed.
 
 For installation instructions [see this guide](https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins).
 
+The recommended type of this plugin is: `js`
 
-## Options
-
-| Name | Type | Default | Description
-| ---- | ---- | ------- | -----------
-| type | string | **Required** | `custom:popup-card`
-| entity | string | **Required** | Entity id to follow
-| card | object | **Required** | The card to display
-| title | string | entity id | The title to display on dialog
-
-## Example
+### For [custom\_updater](https://github.com/custom-components/custom_updater)
 ```yaml
 resources:
-  - url: /local/popup-card.js
-    type: js
+- url: /customcards/github/thomasloven/card-tools.js?track=true
+  type: js
+- url: /customcards/github/thomasloven/popup-card.js?track=true
+  type: js
+```
+
+
+# Usage instructions
+
+First of all, there are a few things you need to know about what this plugin is and is *not*.
+
+Normally, when you click e.g. a line in an [entities card](https://www.home-assistant.io/lovelace/entities/), the `more-info` dialog for that entity is opened. Using this plugin, a card of your choosing can be displayed *instead*.
+
+Things to note:
+
+- This will replace *every* more-info dialog for the chosen entity on the same view. There is no way to open the popup-card when clicking one thing, and the normal more-info dialog when clicking another - *In the same view*. However:
+- The opened card doesn't need to be related to the chosen entity in any way.
+- By default - if everything is working - you will not see *any difference*. Until you open the card by clicking something else, nothing will pop up.
+- That means that the popup-card does *not* magically appear by itself. You need to supply the means to open it. (I'm really rubbing this in at this point, but you wonuldn't believe the ammount of questions I get about this)
+- This is *not* a card and should *not* be configured as if it is.
+
+
+Still with me? Ok. Let's go.
+
+There are two ways to define a popup-card. Either per-view, or globally.
+
+### Per-view configuration
+
+To define a popup-card in a certain view, add a `popup_cards:` section to the views configuration:
+
+```yaml
 views:
-  - title: ...
+  - title: My view
+    icon: mdi:home-assistant
+    popup_cards:
+      # popup-card configuration goes here
     cards:
-      - type: custom:popup-card
-        entity: light.bed_light
-        title: Bedside lamp settings
-        card:
-          type: entities
-          entities:
-            - light.bed_light
-            - type: custom:time-input-row
-              entity: input_datetime.on_time
-            - type: custom:time-input-row
-              entity: input_datetime.off_time
-            - input_boolean.weekdays_only
       - type: entities
-        entities:
-          - light.bed_light
-          - light.ceiling_lights
-          - light.kitchen_lights
+        ...etc...
+```
+
+Popup-cards defined in this way will replace the more-info dialogs only in the current view.
+
+### Global configuration
+
+To define a popup-card in *all* views, add a `popup_cards:` section to the root of your lovelace configuration:
+
+```yaml
+title: My awesome lovelace interface
+resources:
+  - url: /customcards/github/thomasloven/card-tools.js?track=true
+    type: js
+  - url: /customcards/github/thomasloven/popup-card.js?track=true
+    type: js
+popup_cards:
+  # popup-card configuration goes here
+views:
+  - title: My view
+   ...etc...
+```
+
+Popup-cards defined in this way will replace the more-info dialogs in all views.
+
+It's possible to mix global and per-view popup-card configurations.
+Per-view takes precedence.
+
+## Popup-card configuration
+Whether per-view of global, a popup-card is defined in the following form:
+
+```yaml
+  <entity id>:
+    title: <title>
+    large: <true/false>
+    card:
+      <card>
+```
+
+### `<entity id>`
+The entity id of the entity whose more-info dialog is to be replaced, e.g. `light.bed_light`, `device_tracker.my_phone`, `sun.sun`, `sensor.dummy_sensor_1`.
+
+### `<title>`
+Required
+
+The heading title of the popup. This is required
+
+### `<large>`
+Optional. Default: `false`
+
+If `true` the popup will be a bit wider.
+
+### `<card>`
+Required
+
+The specification of the card to pop up.
+
+E.g:
+```
+type: entities
+entities:
+  - light.bed_light
+  - type: custom:time-input-row
+    entity: input_datetime.on_time
+  - type: custom:time-input-row
+    entity: input_datetime.off_time
+  - input_boolean.weekdays_only
 ```
 
 ![popup-card](https://user-images.githubusercontent.com/1299821/48152470-4b530700-e2c4-11e8-8a4d-d6a2121fc4c5.png)
-
-### Panel mode
-
-If your view is in panel mode, only the first card of the view will be loaded. If you wish to use popup-card for entities on that card, put both your card and popup-card in a stack.
-
