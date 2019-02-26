@@ -6,7 +6,7 @@ Replace the more-info dialog of one entity with a custom lovelace card
 # Breaking changes!
 popup-card is *no longer a card*. See usage instructions below.
 
-# Instalation instructions
+# Installation instructions
 
 This card requires [card-tools](https://github.com/thomasloven/lovelace-card-tools) to be installed.
 
