@@ -14,7 +14,9 @@ customElements.whenDefined('card-tools').then(() => {
       cardTools.logger(Object.keys(data), thisScript);
     }
     if(e.detail && e.detail.entityId && data[e.detail.entityId]) {
-      const settings = data[e.detail.entityId];
+      let settings = data[e.detail.entityId];
+      while(settings && typeof settings === "string") settings = data[settings];
+      if(!settings) return;
       const card = cardTools.createCard(settings.card);
       if(cardTools.hass) card.hass = cardTools.hass;
       cardTools.popUp(settings.title, card, settings.large || false);
