@@ -14,7 +14,9 @@ For installation instructions [see this guide](https://github.com/thomasloven/ha
 
 The recommended type of this plugin is: `js`
 
-### For [custom\_updater](https://github.com/custom-components/custom_updater)
+> Note: By adding `?debug` after the url (`&debug` if you already have `?track=true`) popup-card will print some extra information to your browser console when you open a more-info dialog. This may or may not be helpful if you run into problems.
+
+### If you are using [custom\_updater](https://github.com/custom-components/custom_updater):
 ```yaml
 resources:
 - url: /customcards/github/thomasloven/card-tools.js?track=true
@@ -124,4 +126,63 @@ entities:
   - input_boolean.weekdays_only
 ```
 
+## Repeating cards
+
+If you would like the same card to replace the more-info dialog for multiple entities, you can add a redirection to your popup card configurations on the form:
+
+```yaml
+  <entity id 1>: <entity id 2>
+```
+
+If a popup-card has been defined for `<entity id 2>`, it will now replace the more-info dialog for both `<entity id 1>` and `<entity id 2>`.
+
+# Example configuration
+
+```yaml
+title: My awesome lovelace interface
+resources:
+  - url: /customcards/github/thomasloven/card-tools.js?track=true
+    type: js
+  - url: /customcards/github/thomasloven/popup-card.js?track=true
+    type: js
+views:
+  - title: My view
+    icon: mdi:home-assistant
+    popup_cards:
+      light.bed_light:
+        title: Bedside lamp settings
+        card:
+          type: entities
+          entities:
+            - light.bed_light
+            - type: custom:time-input-row
+              entity: input_datetime.on_time
+            - type: custom:time-input-row
+              entity: input_datetime.off_time
+            - input_boolean.weekdays_only
+    cards:
+      - type: entities
+        entities:
+          - light.bed_light
+          - light.ceiling_lights
+          - light.kitchen_lights
+```
+
 ![popup-card](https://user-images.githubusercontent.com/1299821/48152470-4b530700-e2c4-11e8-8a4d-d6a2121fc4c5.png)
+
+# FAQ
+
+### Can a popup-card be opened programatically, e.g. by a Home Assistant automation?
+
+No, but this can be done using [browser-commander](https://github.com/thomasloven/lovelace-browser-commander).
+
+### Can the size or position of the popup be changed?
+
+The only way to change the size is the `large` option, which does the same thing as clicking on the title.
+
+### Can I remove the title or the X for closing the dialog?
+
+No, but you can set an empty title `title: " "`
+
+---
+<a href="https://www.buymeacoffee.com/uqD6KHCdJ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
