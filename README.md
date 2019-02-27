@@ -3,6 +3,8 @@ popup-card
 
 Replace the more-info dialog of one entity with a custom lovelace card
 
+![popup-card](https://user-images.githubusercontent.com/1299821/48152470-4b530700-e2c4-11e8-8a4d-d6a2121fc4c5.png)
+
 # Breaking changes!
 popup-card is *no longer a card*. See usage instructions below.
 
@@ -168,7 +170,7 @@ views:
           - light.kitchen_lights
 ```
 
-![popup-card](https://user-images.githubusercontent.com/1299821/48152470-4b530700-e2c4-11e8-8a4d-d6a2121fc4c5.png)
+* Screenshot at top of page*
 
 # FAQ
 
