@@ -186,5 +186,13 @@ The only way to change the size is the `large` option, which does the same thing
 
 No, but you can set an empty title `title: " "`
 
+### Why do I need to override a more-info dialog? Can't you just make it pop-up?
+
+Well... yes, actually you can, by using [browser-commander](https://github.com/thomasloven/lovelace-browser-commander) and something with a call-service tap_action.
+
+### Why can't I open the more-info dialog of an entity from the popup-card.
+
+Limitations of Home Assistant.
+
 ---
 <a href="https://www.buymeacoffee.com/uqD6KHCdJ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/white_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
