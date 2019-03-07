@@ -94,6 +94,8 @@ Whether per-view of global, a popup-card is defined in the following form:
   <entity id>:
     title: <title>
     large: <true/false>
+    style:
+      <styles>
     card:
       <card>
 ```
@@ -110,6 +112,11 @@ The heading title of the popup. This is required
 Optional. Default: `false`
 
 If `true` the popup will be a bit wider.
+
+### `<styles>
+Optional. Default: none
+
+Dictionary of CSS styles to apply to the more-info-dialog root.
 
 ### `<card>`
 Required
