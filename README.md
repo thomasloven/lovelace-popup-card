@@ -1,6 +1,8 @@
 popup-card
 ==========
 
+# This is deprecated - Use [browser_mod](https://github.com/thomasloven/hass-browser_mod) instead
+
 Replace the more-info dialog of one entity with a custom lovelace card
 
 ![popup-card](https://user-images.githubusercontent.com/1299821/48152470-4b530700-e2c4-11e8-8a4d-d6a2121fc4c5.png)
